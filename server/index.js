@@ -9,7 +9,7 @@ app.use(express.json());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "admin",
+  password: "12345678", //12345678 local casa, admin local trabajo
   database: "empleados_crud",
 });
 
@@ -48,6 +48,24 @@ app.get("/empleados", (req, res) => {
         
       } else {
         res.send(result)
+      }
+    }
+  );
+});
+
+app.put("/update", (req, res) => {
+  const { id, nombre, edad, pais, cargo, fecha } = req.body;
+
+  db.query(
+    "UPDATE empleados SET nombre= ?, edad = ?, pais = ?, cargo = ?, fecha = ?) WHERE id = ?",
+    [nombre, edad, pais, cargo, fecha,id],
+    (err, result) => {
+      if (err) {
+        console.error("Error al Actualizado el empleado: ", err);
+        res.status(500).send("Error al Actualizado el empleado");
+      } else {
+        console.log("Empleado Actualizado con éxito");
+        res.status(200).send("Empleado Actualizado con éxito");
       }
     }
   );
