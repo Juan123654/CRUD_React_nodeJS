@@ -95,7 +95,7 @@ function App() {
           </div>
           <div className="input-group mb-3">
             <span className="input-group-text" id="basic-addon1">Fecha:</span>
-            <input type="text"
+            <input type="date"
               onChange={(event) => {
                 setFecha(event.target.value);
               }}

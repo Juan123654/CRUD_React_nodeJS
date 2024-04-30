@@ -9,7 +9,7 @@ app.use(express.json());
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "12345678", //12345678 local casa, admin local trabajo
+  password: "admin", //12345678 local casa, admin local trabajo
   database: "empleados_crud",
 });
 
@@ -41,7 +41,7 @@ app.post("/create", (req, res) => {
 
 app.get("/empleados", (req, res) => {
   db.query(
-    "SELECT * FROM empleados",
+    "SELECT *, DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha_formateada FROM empleados",
     (err, result) => {
       if (err) {
         console.error(err);
@@ -57,7 +57,7 @@ app.put("/update", (req, res) => {
   const { id, nombre, edad, pais, cargo, fecha } = req.body;
 
   db.query(
-    "UPDATE empleados SET nombre= ?, edad = ?, pais = ?, cargo = ?, fecha = ?) WHERE id = ?",
+    "UPDATE empleados SET nombre= ?, edad = ?, pais = ?, cargo = ?, fecha = ? WHERE id = ?",
     [nombre, edad, pais, cargo, fecha,id],
     (err, result) => {
       if (err) {
